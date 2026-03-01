@@ -28,10 +28,36 @@
                     <td>{{ $data->alamat }}</td>
                     <td>{{ $data->username }}</td>
                     <td>
-                        <a href="{{ route('admin.undo', $data->id_admin) }}" type="button"
-                            class="btn btn-info rounded-3">Undo</a>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#undoModal{{ $data->id_admin }}">
+                            Undo
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="undoModal{{ $data->id_admin }}" tabindex="-1"
+                            aria-labelledby="undoModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="undoModalLabel">Konfirmasi</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <form method="POST" action="{{ route('admin.undo', $data->id_admin) }}">
+                                        @csrf
+                                        <div class="modal-body">
+                                            Apakah anda yakin ingin mengembalikan data <span class="fw-bold">{{ $data->nama }}</span> 
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                            <button type="submit" class="btn btn-primary">Ya</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+
+                        <button type="button" class="btn btn-danger ms-auto" data-bs-toggle="modal"
                             data-bs-target="#hapusModal{{ $data->id_admin }}">
                             Hapus Permanen
                         </button>
